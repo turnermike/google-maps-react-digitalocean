@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+// import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import CurrentLocation from './Map';
 
 const keys = require('./config/keys');
+// console.log('key', keys.googleAPIKey);
 
-const mapStyles = {
-  width: '100%',
-  height: '100%'
-};
+// const mapStyles = {
+//   width: '100%',
+//   height: '100%'
+// };
 
 export class MapContainer extends Component {
 
@@ -34,18 +37,15 @@ export class MapContainer extends Component {
 
   render() {
 
+    console.log('test', this.props);
+    
     return (
 
-      <Map
+      <CurrentLocation
+        centerAroundCurrentLocation
         google={this.props.google}
-        zoom={10}
-        style={mapStyles}
-        initialCenter={{ lat: 43.394344, lng: -79.822935 }}
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          name={'Mike\'s House'}
-        />
+{/*        <Marker onClick={this.onMarkerClick} name={'Mike\'s House'} />
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
@@ -54,8 +54,30 @@ export class MapContainer extends Component {
           <div>
             <h4>{this.state.selectedPlace.name}</h4>
           </div>
-        </InfoWindow>
-      </Map>
+        </InfoWindow>*/}
+      </CurrentLocation>
+
+
+      // <Map
+      //   google={this.props.google}
+      //   zoom={10}
+      //   style={mapStyles}
+      //   initialCenter={{ lat: 43.394344, lng: -79.822935 }}
+      // >
+      //   <Marker
+      //     onClick={this.onMarkerClick}
+      //     name={'Mike\'s House'}
+      //   />
+      //   <InfoWindow
+      //     marker={this.state.activeMarker}
+      //     visible={this.state.showingInfoWindow}
+      //     onClose={this.onClose}
+      //   >
+      //     <div>
+      //       <h4>{this.state.selectedPlace.name}</h4>
+      //     </div>
+      //   </InfoWindow>
+      // </Map>
 
     );
 
@@ -64,13 +86,13 @@ export class MapContainer extends Component {
 }
 
 
-// export default GoogleApiWrapper({
-//   apiKey: keys.googleAPIKey
-// })(MapContainer);
 
 export default GoogleApiWrapper(
   (props) => ({
-    // apiKey: props.apiKey
     apiKey: keys.googleAPIKey
   })
 )(MapContainer);
+
+
+
+
