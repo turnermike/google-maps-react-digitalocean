@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const keys = require('./config/keys');
-// console.log('key', keys.googleAPIKey);
 
 const mapStyles = {
   map: {
@@ -66,7 +65,7 @@ export class CurrentLocation extends React.Component {
 
   loadMap() {
 
-    console.log('loadMap()', this.props);
+    // console.log('loadMap()', this.props);
 
     if (this.props && this.props.google) {
       // checks if google is available
@@ -98,21 +97,23 @@ export class CurrentLocation extends React.Component {
   }  
 
 
-  // renderChildren() {
-  //   const { children } = this.props;
-  //   console.log('children', children);
+  renderChildren() {
 
-  //   if (!children) return;
+    const { children } = this.props;
+    console.log('children', children);
 
-  //   return React.Children.map(children, c => {
-  //     if (!c) return;
-  //     return React.cloneElement(c, {
-  //       map: this.map,
-  //       google: this.props.google,
-  //       mapCenter: this.state.currentLocation
-  //     });
-  //   });
-  // }  
+    if (!children) return;
+
+    return React.Children.map(children, c => {
+      if (!c) return;
+      return React.cloneElement(c, {
+        map: this.map,
+        google: this.props.google,
+        mapCenter: this.state.currentLocation
+      });
+    });
+    
+  }  
 
 
   recenterMap() {
@@ -140,7 +141,7 @@ export class CurrentLocation extends React.Component {
         <div style={style} ref="map">
           Loading map...
         </div>
-{/*        {this.renderChildren()}*/}
+        {this.renderChildren()}
       </div>
     );
 
@@ -151,6 +152,7 @@ export class CurrentLocation extends React.Component {
 
 export default CurrentLocation;
 
+// set default props
 CurrentLocation.defaultProps = {
   zoom: 10,
   initialCenter: {
