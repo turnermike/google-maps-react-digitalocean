@@ -13,10 +13,50 @@ const keys = require('./config/keys');
 
 export class MapContainer extends Component {
 
-  state = {
-    showingInfoWindow: false,  //Hides or the shows the infoWindow
-    activeMarker: {},          //Shows the active marker upon click
-    selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker
+  constructor(props) {
+
+    super(props);
+
+    this.state = {
+      stores: [
+        { lat: 43.394348, lng: -79.822962 },
+        { lat: 43.519860, lng: -79.862151 },
+        { lat: 43.521502, lng: -79.865997 }
+      ],
+      showingInfoWindow: false,  //Hides or the shows the infoWindow
+      activeMarker: {},          //Shows the active marker upon click
+      selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker
+
+    };
+
+  }
+
+  displayMarkers = () => {
+
+    return this.state.stores.map( (store, index) => {
+
+      return ( 
+  
+        <Marker 
+          key={index} 
+          id={index} 
+          position={{ lat: store.lat, lng: store.lng }}
+          onClick={ () => console.log('clicked me!') }
+        >
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}
+          onClose={this.onClose}
+        >
+          <div>
+            <h4>{this.state.selectedPlace.name}</h4>
+          </div>
+        </InfoWindow>        
+        </Marker>
+      );
+
+    });
+
   };
 
   onMarkerClick = (props, marker, e) =>
@@ -28,15 +68,19 @@ export class MapContainer extends Component {
     });
 
   onClose = props => {
+
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
         activeMarker: null
       })
     }
+
   };
 
   render() {
+
+    console.log('render()');
     
     return (
 
@@ -44,7 +88,10 @@ export class MapContainer extends Component {
         centerAroundCurrentLocation
         google={this.props.google}
       >
-        {/* initialCenter location marker */}
+
+        { this.displayMarkers() }
+
+{/*
         <Marker onClick={this.onMarkerClick} name={'Mike\'s House'} />
         <InfoWindow
           marker={this.state.activeMarker}
@@ -55,8 +102,6 @@ export class MapContainer extends Component {
             <h4>{this.state.selectedPlace.name}</h4>
           </div>
         </InfoWindow>
-
-        {/*EW Foster School*/}
         <Marker key="test" position={{ lat: 43.519860, lng: -79.862151 }} name="EW Foster" onClick={this.onMarkerClick} />        
         <InfoWindow
           marker={this.state.activeMarker}
@@ -67,6 +112,7 @@ export class MapContainer extends Component {
             <h4>{this.state.selectedPlace.name}</h4>
           </div>
         </InfoWindow>
+*/}
 
       </CurrentLocation>
 
