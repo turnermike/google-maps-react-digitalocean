@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from './Map';
 
@@ -23,7 +22,7 @@ export class MapContainer extends Component {
         { lat: 43.519860, lng: -79.862151 },
         { lat: 43.521502, lng: -79.865997 }
       ],
-      showingInfoWindow: false,  //Hides or the shows the infoWindow
+      showingInfoWindow: true,  //Hides or the shows the infoWindow
       activeMarker: {},          //Shows the active marker upon click
       selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker
 
@@ -31,41 +30,15 @@ export class MapContainer extends Component {
 
   }
 
-  displayMarkers = () => {
-
-    return this.state.stores.map( (store, index) => {
-
-      return ( 
-  
-        <Marker 
-          key={index} 
-          id={index} 
-          position={{ lat: store.lat, lng: store.lng }}
-          onClick={ () => console.log('clicked me!') }
-        >
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClose={this.onClose}
-        >
-          <div>
-            <h4>{this.state.selectedPlace.name}</h4>
-          </div>
-        </InfoWindow>        
-        </Marker>
-      );
-
-    });
-
-  };
-
-  onMarkerClick = (props, marker, e) =>
+  onMarkerClick = (props, marker, e) => {
 
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
+
+  }
 
   onClose = props => {
 
@@ -89,9 +62,8 @@ export class MapContainer extends Component {
         google={this.props.google}
       >
 
-        { this.displayMarkers() }
+        {/*{ this.displayMarkers() }*/}
 
-{/*
         <Marker onClick={this.onMarkerClick} name={'Mike\'s House'} />
         <InfoWindow
           marker={this.state.activeMarker}
@@ -112,35 +84,44 @@ export class MapContainer extends Component {
             <h4>{this.state.selectedPlace.name}</h4>
           </div>
         </InfoWindow>
-*/}
 
       </CurrentLocation>
 
-
-      // <Map
-      //   google={this.props.google}
-      //   zoom={10}
-      //   style={mapStyles}
-      //   initialCenter={{ lat: 43.394344, lng: -79.822935 }}
-      // >
-      //   <Marker
-      //     onClick={this.onMarkerClick}
-      //     name={'Mike\'s House'}
-      //   />
-      //   <InfoWindow
-      //     marker={this.state.activeMarker}
-      //     visible={this.state.showingInfoWindow}
-      //     onClose={this.onClose}
-      //   >
-      //     <div>
-      //       <h4>{this.state.selectedPlace.name}</h4>
-      //     </div>
-      //   </InfoWindow>
-      // </Map>
-
     );
 
-  }
+  }  
+
+  // displayMarkers = () => {
+
+  //   return this.state.stores.map( (store, index) => {
+
+  //     return ( 
+  
+  //       <Marker 
+  //         key={index} 
+  //         id={index} 
+  //         position={{ lat: store.lat, lng: store.lng }}
+  //         onClick={ () => console.log('clicked me!') }
+  //       >
+  //       <InfoWindow
+  //         marker={this.state.activeMarker}
+  //         visible={this.state.showingInfoWindow}
+  //         onClose={this.onClose}
+  //       >
+  //         <div>
+  //           <h4>{this.state.selectedPlace.name}</h4>
+  //         </div>
+  //       </InfoWindow>        
+  //       </Marker>
+  //     );
+
+  //   });
+
+  // };
+
+
+
+
 
 }
 
