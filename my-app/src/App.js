@@ -18,9 +18,9 @@ export class MapContainer extends Component {
 
     this.state = {
       stores: [
-        { lat: 43.394348, lng: -79.822962 },
-        { lat: 43.519860, lng: -79.862151 },
-        { lat: 43.521502, lng: -79.865997 }
+        { lat: 43.394348, lng: -79.822962, name: 'Marker One' },
+        { lat: 43.519860, lng: -79.862151, name: 'Marker Two' },
+        { lat: 43.521502, lng: -79.865997, name: 'Marker Three' }
       ],
       showingInfoWindow: true,  //Hides or the shows the infoWindow
       activeMarker: {},          //Shows the active marker upon click
@@ -30,15 +30,30 @@ export class MapContainer extends Component {
 
   }
 
+  // onMarkerClick = (props, marker, e) => {
+
+  //   console.log('onMarkerClick()', marker);
+
+  //   this.setState({
+  //     selectedPlace: props,
+  //     activeMarker: marker,
+  //     showingInfoWindow: true
+  //   });
+
+  // }
+
   onMarkerClick = (props, marker, e) => {
 
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
+    console.log('onMarkerClick()', marker);
+
+    // this.setState({
+    //   selectedPlace: props,
+    //   activeMarker: marker,
+    //   showingInfoWindow: true
+    // });
 
   }
+
 
   onClose = props => {
 
@@ -62,8 +77,9 @@ export class MapContainer extends Component {
         google={this.props.google}
       >
 
-        {/*{ this.displayMarkers() }*/}
+        { this.displayMarkers() }
 
+{/*
         <Marker onClick={this.onMarkerClick} name={'Mike\'s House'} />
         <InfoWindow
           marker={this.state.activeMarker}
@@ -84,6 +100,7 @@ export class MapContainer extends Component {
             <h4>{this.state.selectedPlace.name}</h4>
           </div>
         </InfoWindow>
+*/}        
 
       </CurrentLocation>
 
@@ -91,33 +108,37 @@ export class MapContainer extends Component {
 
   }  
 
-  // displayMarkers = () => {
+  displayMarkers = () => {
 
-  //   return this.state.stores.map( (store, index) => {
+    return this.state.stores.map( (store, index) => {
 
-  //     return ( 
+      console.log('store.name', store.name);
+      
+      return ( 
   
-  //       <Marker 
-  //         key={index} 
-  //         id={index} 
-  //         position={{ lat: store.lat, lng: store.lng }}
-  //         onClick={ () => console.log('clicked me!') }
-  //       >
-  //       <InfoWindow
-  //         marker={this.state.activeMarker}
-  //         visible={this.state.showingInfoWindow}
-  //         onClose={this.onClose}
-  //       >
-  //         <div>
-  //           <h4>{this.state.selectedPlace.name}</h4>
-  //         </div>
-  //       </InfoWindow>        
-  //       </Marker>
-  //     );
+        <Marker 
+          key={index} 
+          id={index} 
+          position={{ lat: store.lat, lng: store.lng }}
+          onClick={this.onMarkerClick}
+          name={store.name}
+        >
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}
+          onClose={this.onClose}
+        >
+          <div>
+            <h4>test</h4>
+          </div>
+        </InfoWindow>        
+        </Marker>
 
-  //   });
+      );
 
-  // };
+    });
+
+  };
 
 
 
